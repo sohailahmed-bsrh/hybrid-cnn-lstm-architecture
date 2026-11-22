@@ -1,126 +1,120 @@
-# Hybrid Multi-Modal CNN-LSTM Deep Neural Network
+# Hybrid CNN-LSTM Neural Network Architecture - Spatial-Temporal Modeling
 
-> Dual-stream deep architecture fusing spatial vision features with recurrent sequential text models.
-
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/sohailahmed-bsrh/hybrid-cnn-lstm-architecture)
-[![Live Showcase](https://img.shields.io/badge/Live-Showcase-0A66C2?style=flat-square&logo=googlechrome)](https://sohail.devsil.com/projects.html)
-[![Author](https://img.shields.io/badge/Author-Sohail%20Ahmed-20BEFF?style=flat-square)](https://sohail.devsil.com)
-
----
-
-## Overview
-
-Multi-modal tasks require disparate deep learning architectures capable of processing both 2D spatial features and temporal sequences.
-
-This project provides an end-to-end, reproducible implementation engineered to solve this challenge through verified data transformations, reliable algorithms, and production-ready architecture.
+<p align="center">
+  <a href="https://sohail.devsil.com"><strong>Portfolio</strong></a> | 
+  <a href="https://github.com/sohailahmed-bsrh"><strong>GitHub Profile</strong></a> | 
+  <a href="https://github.com/sohailahmed-bsrh/hybrid-cnn-lstm-architecture"><strong>Source Repository</strong></a>
+</p>
 
 ---
 
-## Key Features
+## Executive Summary & Problem Statement
 
-- Convolutional Neural Network feature extraction stream for spatial pattern classification
-- Long Short-Term Memory (LSTM) recurrent network processing sequential semantic data
-- End-to-end model checkpointing, loss curve evaluation, and validation metrics
-- Modular Jupyter notebook walkthrough with comparative performance analysis
+Standard deep learning architectures excel at isolated domains: Convolutional Neural Networks (CNNs) extract hierarchical spatial features from static matrices, while Recurrent Neural Networks (such as LSTMs) model temporal sequence dependencies. However, complex multi-modal problems (such as video action classification, speech sentiment analysis, and continuous biometric signal tracking) require modeling spatial patterns that evolve over time.
+
+This project implements a unified **Hybrid CNN-LSTM Deep Learning Architecture**. By coupling a 2D/1D Convolutional feature extraction backbone with a Long Short-Term Memory temporal recurrence layer, the network simultaneously captures spatial feature representations and sequential temporal dynamics.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/sohailahmed-bsrh/myportfolio/main/assets/images/thumbnail/cnn-vision-lstm-nlp.jpeg" width="650" alt="Hybrid CNN-LSTM Architecture"/>
+  <p><em>Unified deep learning pipeline coupling convolutional spatial representations with recurrent temporal memory.</em></p>
+</div>
 
 ---
 
-## System Architecture
+## Real-World Industry Applications
 
-```mermaid
-flowchart TD
-    subgraph Vision Stream
-        ImageInput[Spatial Image Input] --> ConvLayers[Conv2D + MaxPool Layers]
-        ConvLayers --> SpatialEmbed[Spatial Feature Vector]
-    end
-    subgraph NLP Stream
-        TextInput[Text Sequence Input] --> EmbeddingLayer[Word Embedding Layer]
-        EmbeddingLayer --> LSTMLayers[LSTM Recurrent Unit]
-        LSTMLayers --> SequenceEmbed[Temporal Feature Vector]
-    end
-    SpatialEmbed --> Evaluation[Evaluation Metrics & Loss Validation]
-    SequenceEmbed --> Evaluation
+- **Video Action & Activity Recognition**: Analyzes sequential video frames to classify human activities and gestures in real time.
+- **Biomedical Signal Processing**: Classifies multi-lead ECG and EEG waveforms where spatial wave morphology changes across temporal cycles.
+- **Sequential Sentiment Analysis & NLP**: Combines n-gram spatial pattern extraction via 1D convolutions with long-range semantic context tracking via LSTM cells.
+- **Industrial Sensor Anomaly Tracking**: Monitors multi-sensor telemetry across industrial manufacturing pipelines.
+
+---
+
+## Technical Architecture & Engineering Walkthrough
+
+```
+                      [Input Tensor: Sequence of Spatial Frames]
+                                         │
+                                         ▼
+            [TimeDistributed Convolutional Layers (Conv2D / Conv1D)]
+                        (Spatial Feature Extraction)
+                                         │
+                                         ▼
+            [Spatial Pooling & Feature Flattening (MaxPooling / GAP)]
+                                         │
+                                         ▼
+                    [Spatial Feature Vectors across Time]
+                                         │
+                                         ▼
+                 [Stacked LSTM Recurrent Layers (Memory Cells)]
+                        (Temporal Dynamics & State Retention)
+                                         │
+                                         ▼
+             [Fully Connected Dense Layers with Dropout Regularization]
+                                         │
+                                         ▼
+               [Softmax / Sigmoid Classification & Risk Scoring]
 ```
 
----
+### Step 1: Multi-Modal Data Preprocessing & Formatting
+Raw inputs are structured into sequential multi-dimensional tensors `(batch_size, sequence_length, height, width, channels)` for visual inputs or `(batch_size, time_steps, features)` for sensor signals.
 
-## Technology Stack
+### Step 2: TimeDistributed Convolutional Feature Extraction
+Wraps convolutional layers within a `TimeDistributed` wrapper in Keras/TensorFlow. This enforces consistent spatial weight kernels across every consecutive time step without memory leakage.
 
-| Technology | Version / Spec | Role in Architecture |
-| :--- | :--- | :--- |
-| **TensorFlow / Keras** | `2.12+` | Convolutional and recurrent neural network implementation |
-| **OpenCV** | `4.8+` | Image transformation and visual normalization |
-| **NumPy & Pandas** | `2.0+` | Tensor manipulations and dataset structuring |
+### Step 3: Recurrent Sequence Modeling via LSTM
+Spatial feature representations output by the convolutional stage are routed directly into stacked LSTM cells. The input gate, forget gate, and cell state preserve long-range dependencies across long temporal sequences.
 
----
+### Step 4: Regularization & Optimization
+Employs Spatial Dropout, Recurrent Dropout, and Batch Normalization to prevent co-adaptation of feature detectors. Uses the Adam optimizer with scheduled learning rate decay.
 
-## Repository Structure
-
-```text
-hybrid-cnn-lstm-architecture/
-|-- notebooks/
-|   `-- Deep_Learning_Project_using_CNN_(Computer_Vision)_and_LSTM_(NLP).ipynb
-|-- data/
-|-- .gitignore
-|-- requirements.txt
-`-- README.md
-```
+### Step 5: Empirical Evaluation & Ablation Study
+Compares performance metrics (Accuracy, F1-Score, ROC-AUC, Confusion Matrix) against standalone CNN and standalone LSTM baselines to confirm the hybrid architecture's superiority.
 
 ---
 
-## Installation and Execution
+## Technology Stack & Implementation Specifications
 
-### Prerequisites
-- Python 3.10 or higher
-- Git version control
-- Virtual environment manager (`venv`)
+| Component | Technology | Version | Architectural Function |
+| :--- | :--- | :--- | :--- |
+| **Deep Learning Framework** | TensorFlow / Keras | 2.15+ | Modular CNN-LSTM layer construction and training |
+| **Computation Engine** | NumPy | Latest | Multi-dimensional tensor transformation and normalization |
+| **Data Handling** | Pandas | 2.x | Sequence metadata indexing and split management |
+| **Metric Evaluation** | Scikit-Learn | 1.3+ | Multi-class classification metrics and ROC curve generation |
+| **Visualization** | Matplotlib / Seaborn | 3.8+ | Training loss/accuracy curves and confusion matrices |
 
-### Setup Instructions
-1. Clone the repository:
+---
+
+## Installation & Execution Guide
+
 ```bash
 git clone https://github.com/sohailahmed-bsrh/hybrid-cnn-lstm-architecture.git
 cd hybrid-cnn-lstm-architecture
-```
-
-2. Configure environment and dependencies:
-```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Windows: venv\Scriptsctivate | Unix: source venv/bin/activate
 pip install -r requirements.txt
 jupyter notebook notebooks/
 ```
 
 ---
 
-## Interface and Verification
-The system produces verifiable execution logs, prediction matrices, or interactive browser interfaces depending on the target mode. Verify operation by executing the commands specified above or inspecting the demonstration notebooks.
-
----
-
-## Author and Contact
-Developed by **Sohail Ahmed** — Full Stack AI Engineer & Machine Learning Specialist.
-- **Portfolio:** [sohail.devsil.com](https://sohail.devsil.com)
-- **GitHub:** [@sohailahmed-bsrh](https://github.com/sohailahmed-bsrh)
-- **Email:** [sohail.bsrh@gmail.com](mailto:sohail.bsrh@gmail.com)
-
----
-
 ## Author & Contact Information
 
-<table width="100%" align="center">
+<table width="100%">
   <tr>
-    <td align="center" style="padding: 20px;">
+    <td width="150" align="center" valign="middle">
+      <img src="https://avatars.githubusercontent.com/u/231165170?v=4" width="120" style="border-radius: 50%;" alt="Sohail Ahmed"/>
+    </td>
+    <td>
       <h3>Sohail Ahmed</h3>
-      <p><strong>Full-Stack Artificial Intelligence & Computer Vision Engineer</strong></p>
+      <p><strong>Senior Software Engineer & AI Systems Architect</strong></p>
+      <p>Specializing in Full-Stack AI Application Development, Computer Vision, Deep Learning Pipelines, and Scalable Automation Architectures.</p>
       <p>
-        <a href="https://sohail.devsil.com"><img src="https://img.shields.io/badge/Live_Portfolio-sohail.devsil.com-0052FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio"/></a>
-        <a href="https://github.com/sohailahmed-bsrh"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
-        <a href="https://linkedin.com/in/sohail-ahmed-dev"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-        <a href="mailto:sohail.bsrh@gmail.com"><img src="https://img.shields.io/badge/Email-Contact_Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
+        <a href="https://sohail.devsil.com"><strong>Portfolio Website</strong></a> | 
+        <a href="https://github.com/sohailahmed-bsrh"><strong>GitHub Profile</strong></a> | 
+        <a href="https://www.linkedin.com/in/sohail-ahmed-546314316/"><strong>LinkedIn</strong></a> | 
+        <a href="mailto:se906403@gmail.com"><strong>Email Contact</strong></a>
       </p>
-      <p><em>Available for technical roles in Artificial Intelligence, Computer Vision, and Full-Stack Engineering.</em></p>
-      <hr style="border: 0; height: 1px; background: #30363d; margin: 15px 0;">
-      <small>Distributed under the MIT License.</small>
     </td>
   </tr>
 </table>
