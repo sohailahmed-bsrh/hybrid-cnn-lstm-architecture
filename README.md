@@ -12,7 +12,7 @@
 
 Multi-modal tasks require disparate deep learning architectures capable of processing both 2D spatial features and temporal sequences.
 
-This project provides an end-to-end, reproducible implementation engineered to solve this challenge through verified data transformations, robust algorithms, and production-ready architecture.
+This project provides an end-to-end, reproducible implementation engineered to solve this challenge through verified data transformations, reliable algorithms, and production-ready architecture.
 
 ---
 
